@@ -28,4 +28,4 @@ pip install -r requirements.txt
 python3 simple-osint.py
 ```
 <br>
-##### :airplane: Наш Telegram канал: https://t.me/dark_net_tj
+#####  :airplane: Наш Telegram канал: https://t.me/dark_net_tj
