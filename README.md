@@ -26,7 +26,6 @@ git clone https://github.com/Sherafgan1001/SimpleOsint.git
 cd SimpleOsint
 pip install -r requirements.txt
 python3 simple-osint.py
-```
-<br>
+``` 
 
 ##### :airplane: Наш Telegram канал: https://t.me/dark_net_tj
