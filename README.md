@@ -27,5 +27,16 @@ cd SimpleOsint
 pip install -r requirements.txt
 python3 simple-osint.py
 ``` 
+### :iphone: Инструкция по установке на iShell (iPhone)
+```text
+apk update && apk upgrade
+apk install git
+apk install python3
+apk install py-pip
+git clone https://github.com/Sherafgan1001/SimpleOsint.git
+cd SimpleOsint
+pip install -r requirements.txt
+python3 simple-osint.py
+``` 
 
 ##### :airplane: Наш Telegram канал: https://t.me/dark_net_tj
