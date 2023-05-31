@@ -12,6 +12,7 @@
 ```
 ### :computer: Инструкция по установке на Kali Linux / Parrot OS
 ```text
+sudo apt install git python3 -y && sudo apt update -y && sudo apt upgrade -y && sudo apt autoremove -y 
 git clone https://github.com/Sherafgan1001/SimpleOsint.git
 cd SimpleOsint
 pip install -r requirements.txt
@@ -19,9 +20,8 @@ python3 simple-osint.py
 ```
 ### :iphone: Инструкция по установке на Termux
 ```text
-pkg update && pkg upgrade
-pkg install git
-pkg install python3
+pkg update -y && pkg upgrade -y
+pkg install git python3 -y
 git clone https://github.com/Sherafgan1001/SimpleOsint.git
 cd SimpleOsint
 pip install -r requirements.txt
@@ -29,14 +29,10 @@ python3 simple-osint.py
 ``` 
 ### :iphone: Инструкция по установке на iShell (iPhone)
 ```text
-apk update && apk upgrade
-apk install git
-apk install python3
-apk install py-pip
+apk update -y && apk upgrade -y
+apk install git python3 py-pip -y
 git clone https://github.com/Sherafgan1001/SimpleOsint.git
 cd SimpleOsint
 pip install -r requirements.txt
 python3 simple-osint.py
-``` 
-
-##### :airplane: Наш Telegram канал: https://t.me/dark_net_tj
+```  
