@@ -1,109 +1,75 @@
 import base64
 import datetime
 import requests
-from bs4 import BeautifulSoup
-import json
-from colorama import Fore
 import sys
+from os import system
+from bs4 import BeautifulSoup
+from colorama import Fore
+from fake_useragent import UserAgent
 
-osintInstagram = base64.b64decode("aHR0cHM6Ly9zaGVyYWZnYW4uY2xvdWR1ei5ydS9hcGkvb3NpbnRncmFtL2FwaS5waHA/dXNlcj0=").decode()
-ipOsint = base64.b64decode("aHR0cHM6Ly9zaGVyYWZnYW4uY2xvdWR1ei5ydS9hcGkvaXAvYXBpLnBocD9pcD0=").decode()
+# func for decoding
+def base85_decode(encoded_string):
+    return base64.a85decode(encoded_string).decode()
 
-time_h = datetime.datetime.now().hour 
-if time_h == 0:
-    time = 'Шаб ба хайр'
-elif time_h == 1:
-    time = 'Шаб ба хайр'
-elif time_h == 2:
-    time = 'Шаб ба хайр'
-elif time_h == 3:
-    time = 'Шаб ба хайр'
-elif time_h == 4:
-    time = 'Шаб ба хайр'
-elif time_h == 5:
-    time = 'Шаб ба хайр'
-elif time_h == 6:
-    time = 'Субҳ ба хайр'
-elif time_h == 7:
-    time = 'Субҳ ба хайр'
-elif time_h == 8:
-    time = 'Субҳ ба хайр'
-elif time_h == 9:
-    time = 'Субҳ ба хайр'
-elif time_h == 10:
-    time = 'Рўз ба хайр'
-elif time_h == 11:
-    time = 'Рўз ба хайр'
-elif time_h == 12:
-    time = 'Рўз ба хайр'
-elif time_h == 13:
-    time = 'Рўз ба хайр'
-elif time_h == 14:
-    time = 'Рўз ба хайр'
-elif time_h == 15:
-    time = 'Рўз ба хайр'
-elif time_h == 16:
-    time = 'Рўз ба хайр'
-elif time_h == 17:
-    time = 'Шом ба хайр'
-elif time_h == 18:
-    time = 'Шом ба хайр'
-elif time_h == 19:
-    time = 'Шом ба хайр'
-elif time_h == 20:
-    time = 'Шаб ба хайр'
-elif time_h == 21:
-    time = 'Шаб ба хайр'
-elif time_h == 22:
-    time = 'Шаб ба хайр'
-elif time_h == 23:
-    time = 'Шаб ба хайр'
+# encoded strings 
+osintInstagram = base85_decode("BQS?8F#ks-F(f-*@:j.\\DD#F8DfoT5H7j5\\04Ag605koGDKKN3@;RZ+E+pqDBQ-1YF(KAT")
+ipOsint = base85_decode("BQS?8F#ks-F(f-*@:j.\\DD#F8DfoT5H7j5\\04Ag6055AY@;op5E+j2TBlH3")
 
+#greetings
+time_h = datetime.datetime.now().hour
+time = (lambda h: 'Шаб ба хайр' if 0 <= h <= 5 or 20 <= h <= 23 else 'Субҳ ба хайр' if 6 <= h <= 9 else 'Рўз ба хайр' if 10 <= h <= 16 else 'Шом ба хайр')(time_h)
+
+#OSINT IP
 def ip(ip):
     try:
+        system("clear || cls")
+        print(f'[+] IP-СУРОҒА - {ip}\n')
         response = requests.get(url=f"{ipOsint}{ip}").json()
         result = {
-            "[IP-addres]":response['result']['ip'],
-            "[Timezone]":response['result']['timezone'],
-            "[Offset]":response['result']['offset'],
-            "[Вакти хозира]":response['result']['localtime'],
-            "[Europe]":response['result']['eu'],
-            "[Материк]":response['result']['continent'],
-            "[Номи материк]":response['result']['continent_name'],
-            "[Кишвар]":response['result']['country'],
-            "[Номи кишвар]":response['result']['country_name'],
-            "[Номи шахр]":response['result']['city'],
-            "[Вилоят]":response['result']['state'],
-            "[Минтақа]":response['result']['district'],
-            "[Пайвастшави]":response['result']['connection'],
-            "[Zipcode]":response['result']['zipcode'],
-            "[Пахнои]":response['result']['latitude'],
-            "[Дарози]":response['result']['longitude'],
-            "[Интернет провайдер]":response['result']['isp'],
-            "[Ташкилот]":response['result']['organization'],
+            "[ IP-СУРОҒА ]":response['result']['ip'],
+            "[ МИНТАҚАИ ВАКТ ]":response['result']['timezone'],
+            "[ ОФФСЕТ ]":response['result']['offset'],
+            "[ ВАҚТИ ХОЗИРА ]":response['result']['localtime'],
+            "[ АВРУПО ]":response['result']['eu'],
+            "[ МАТЕРИК ]":response['result']['continent'],
+            "[ НОМИ МАТЕРИК ]":response['result']['continent_name'],
+            "[ КИШВАР ]":response['result']['country'],
+            "[ НОМИ КИШВАР ]":response['result']['country_name'],
+            "[ НОМИ ШАХР ]":response['result']['city'],
+            "[ ВИЛОЯТ ]":response['result']['state'],
+            "[ МИНТАҚА ]":response['result']['district'],
+            "[ ПАЙВАСТШАВӢ ]":response['result']['connection'],
+            "[ Индекси почтаӣ ]":response['result']['zipcode'],
+            "[ ПАҲНОӢ ]":response['result']['latitude'],
+            "[ ДАРОЗӢ ]":response['result']['longitude'],
+            "[ ИНТЕРНЕТ ПРОВАЙДЕР ]":response['result']['isp'],
+            "[ ТАШКИЛОТ ]":response['result']['organization'],
         }
         for k, v in result.items():
                 print(Fore.YELLOW + f'{k}: {v}')
     except KeyError:
-        print(Fore.RED + "[!] IP addres нодуруст ворид шудааст")
+        print(Fore.RED + "[-] IP-СУРОҒА нодуруст ворид шудааст")
     except requests.exceptions.ConnectionError:
-        print(Fore.RED + "[!] Лутфан алокаи интернетро санчед")
+        print(Fore.RED + "[!] Лутфан алоқаи интернетро санчед")
 
+#OSINT INSTA
 def insta(insta):
     if "@" in insta:
         insta = insta.replace("@", "")
     try:
+        system("cls || clear")
+        print(f'[+] САХИФА - {insta}\n')
         response = requests.get(url=f"{osintInstagram}{insta}").json()
         result = {
-                "[ID]":response['result']['id'],
-                "[Username]":response['result']['username'],
-                "[Закрытый аккаунт]":response['result']['is_private'],
-                "[Profile Pic Url]":response['result']['profile_pic_url'],
-                "[Биография]":response['result']['biography'],
-                "[Name]":response['result']['full_name'],
-                "[Публикация]":response['result']['edge_owner_to_timeline_media']['count'],
-                "[Подписчики]":response['result']['edge_followed_by']['count'],
-                "[Подписки]":response['result']['edge_follow']['count'],
+                "[ ID ]":response['result']['id'],
+                "[ НОМИ КОРБАРӢ ]":response['result']['username'],
+                "[ САҲИФАИ МАҲКАМ ]":response['result']['is_private'],
+                "[ СУРАТИ САҲИФА ]":response['result']['profile_pic_url'],
+                "[ БИОГРАФИЯ ]":response['result']['biography'],
+                "[ НОМ ]":response['result']['full_name'],
+                "[ НАШРҲО ]":response['result']['edge_owner_to_timeline_media']['count'],
+                "[ МУШТАРИҲО ]":response['result']['edge_followed_by']['count'],
+                "[ ОБУНА ШУДАГИ ]":response['result']['edge_follow']['count'],
             }
         for k, v in result.items():
                 print(Fore.YELLOW + f'{k}: {v}')
@@ -112,14 +78,18 @@ def insta(insta):
     except requests.exceptions.ConnectionError:
         print(Fore.RED + "[!] Лутфан алокаи интернетро санчед")
 
+#OSINT TIKTOK
 def tiktok(user):
     if "@" in user:
         user = user.replace("@", "")
     try:
+        system("clear || cls")
+        print(f'[+] САХИФА - {user}\n')
+        ua = UserAgent()
         url = f'https://tiktok.com/@{user}'
         headers = {
         'Accept-Language': 'ru',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+        'User-Agent': ua.random
         }
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -133,57 +103,61 @@ def tiktok(user):
         name_tag = soup.find('h1', {'data-e2e': 'user-subtitle'})
         name = name_tag.text
         result = {
-            "[Подписчики]":followers_count,
-            "[Подписки]":following_count,
-            "[Username]":user,
-            "[Profile Pic Url]":image_link,
-            "[Биография]":bio,
-            "[Name]":name,
-            "[Лайки]":likes_count,
+            "[ МУШТАРИҲО ]":followers_count,
+            "[ ОБУНА ШУДАГИ ]":following_count,
+            "[ НОМИ КОРБАРӢ ]":user,
+            "[ СУРАТИ САХИФА ]":image_link,
+            "[ БИОГРАФИЯ ]":bio,
+            "[ НОМ ]":name,
+            "[ ЛАЙКҲО ]":likes_count,
         }
         for k, v in result.items():
             print(Fore.YELLOW + f'{k}: {v}')
     except requests.exceptions.ConnectionError:
-        print(Fore.RED + "Лутфан алокаи интернетро санчед!")
+        print(Fore.RED + "[!] Лутфан алоқаи интернетро санчед.")
     except AttributeError:
-        print(Fore.RED + "[!] Аккаунт бо ин гуна username вучуд надорад")
+        print(Fore.RED + "[!] Аккаунт бо ин гуна username вучуд надорад.")
 
-logo = r'''   _____ _                 __        ____       _       __ 
+banner = r'''   
+   _____ _                 __        ____       _       __ 
   / ___/(_)___ ___  ____  / /__     / __ \_____(_)___  / /_
   \__ \/ / __ `__ \/ __ \/ / _ \   / / / / ___/ / __ \/ __/
  ___/ / / / / / / / /_/ / /  __/  / /_/ (__  ) / / / / /_  
 /____/_/_/ /_/ /_/ .___/_/\___/   \____/____/_/_/ /_/\__/  
                 /_/                                        
+    Барнома барои ҷустуҷӯи маълумот бо востаи IP, Instagram ва TikTok.
+        https://github.com/Sherafgan1001/SimpleOsint
 '''
 
 def main():
-    print(Fore.CYAN + logo)
-    print(Fore.YELLOW + '\n+=====================================================+')
+    print(Fore.CYAN + banner)
+    print(Fore.YELLOW + '+=====================================================+')
     print(f'|                    {time}                      |')
     print('+=====================================================+')
-    print('| 1. Чустучуи маълумот оиди ip-адрес                  |')
-    print('| 2. Чустучуи маълумот оиди аккаунти Instagram        |')
-    print('| 3. Чустучуи маълумот оиди аккаунти TikTok           |')
-    print('| 4. exit - баромадан аз барнома                      |')
+    print('| 1 - ҶУСТУҶӮИ МАЪЛУМОТ ОИДИ IP-АДРЕС                 |')
+    print('| 2 - ҶУСТУҶӮИ МАЪЛУМОТ ОИДИ САҲИФАИ ШАХСИИ Instagram |')
+    print('| 3 - ҶУСТУҶӮИ МАЪЛУМОТ ОИДИ САҲИФАИ ШАХСИИ TikTok    |')
+    print('|-----------------------------------------------------|')
+    print('| 4 (EXIT)       БАРОМАДАН АЗ БАРНОМА                 |')
     print('+=====================================================+')
 
 
 if __name__ == "__main__":
     main() 
 while True:
-    user_input = input(Fore.BLUE + ">>> ")
+    user_input = input(Fore.BLUE + "\n]>>> ")
     if user_input == "1":
-        userIP = input(Fore.GREEN + "IP-адресро ворид намоед: ")
+        userIP = input(Fore.GREEN + "[!] IP-адресро ворид намоед: ")
         ip(userIP)
     elif user_input == "2":
-        userName = input(Fore.GREEN + "Юзернеймро ворид намоед: ")
+        userName = input(Fore.GREEN + "[!] Юзернеймро ворид намоед: ")
         insta(userName)
     elif user_input == "3":
-        user = input(Fore.GREEN + "Юзернеймро ворид намоед: ")
+        user = input(Fore.GREEN + "[!] Юзернеймро ворид намоед: ")
         tiktok(user)
-    elif user_input == "exit" or user_input == "4":
-        print("Goodbye")
+    elif user_input == "exit" or user_input == "4" or user_input == "EXIT":
+        print("[!] Хуш бошед ")
         sys.exit()
     else:
-        print(Fore.RED + "[!] Командаи номаълум")
+        print(Fore.RED + "[-] Командаи номаълум ")
         user_input
